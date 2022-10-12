@@ -2,6 +2,9 @@ package com.springdemo.helllo.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+import java.util.List;
 
 
 @Getter
@@ -26,4 +29,11 @@ public class ShowModelDTO {
     private String nguoiNhapLieu;
     private String nguoiKiemSoat;
     private String nguoiPheDuyet;
+    private String loaiBangKe;
+
+    private String type;
+    List<Field> fields;
+    private String tongCong;
+    private String bangChuCai;
+
 }

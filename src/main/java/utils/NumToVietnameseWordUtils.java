@@ -1,6 +1,7 @@
 package utils;
 
 
+
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -125,7 +126,7 @@ public class NumToVietnameseWordUtils {
     public static String convertToCommas(String input) {
         double amount = Double.parseDouble(input);
         DecimalFormat formatter = new DecimalFormat("#,###");
-        return formatter.format(amount);
+        return formatter.format(amount).replaceAll(",", ".");
     }
 
     public static String num2String(Long num) {
@@ -200,4 +201,3 @@ public class NumToVietnameseWordUtils {
         return count < groupOfThousand.size() - 1;
     }
 }
-

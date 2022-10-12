@@ -1,8 +1,10 @@
 package com.springdemo.helllo.service;
 
+import com.springdemo.helllo.dto.Field;
 import com.springdemo.helllo.dto.ShowModelDTO;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
@@ -30,35 +32,116 @@ public class JasperResponseService {
                 List<JasperPrint> jasperPrintList = new ArrayList<JasperPrint>();
                 // khai báo các parameter
                 Map<String, Object> parameters = new HashMap<>();
-                for (ShowModelDTO item : showModelDTOS) {
-                    JasperReport jasperReport = JasperCompileManager.compileReport(new ClassPathResource("reports/ReverseReport.jrxml").getInputStream());
-                    parameters.put("customerId", item.getMaKH());
-                    parameters.put("fullName", item.getTenKhachHang());
-                    parameters.put("phone", item.getSdt());
-                    parameters.put("address", item.getDiaChi());
-                    parameters.put("identifierNumber", item.getGttt());
-                    parameters.put("identifierDateOfIssue", item.getNgayCap());
-                    parameters.put("identifierPlaceOfIssue", item.getNoiCap());
-                    parameters.put("coCode", item.getCoCode());
+                String type = showModelDTOS.get(0).getType();
+                String name = convertNameMoney(type);
 
-                    String total = item.getTongSoTienChi();
-                    String totalView = NumToVietnameseWordUtils.convertToCommas(total).replace(",", ".") + " VND";
+                for (int i = 0; i < showModelDTOS.size() - 1; i++) {
+                    JasperReport jasperReport = JasperCompileManager.compileReport(new ClassPathResource("reports/ReverseReport.jrxml").getInputStream());
+                    parameters.put("customerId", showModelDTOS.get(i).getMaKH());
+                    parameters.put("fullName", showModelDTOS.get(i).getTenKhachHang());
+                    parameters.put("phone", showModelDTOS.get(i).getSdt());
+                    parameters.put("address", showModelDTOS.get(i).getDiaChi());
+                    parameters.put("identifierNumber", showModelDTOS.get(i).getGttt());
+                    parameters.put("identifierDateOfIssue", showModelDTOS.get(i).getNgayCap());
+                    parameters.put("identifierPlaceOfIssue", showModelDTOS.get(i).getNoiCap());
+                    parameters.put("coCode", showModelDTOS.get(i).getCoCode());
+
+                    String total = showModelDTOS.get(i).getTongSoTienChi();
+                    String totalView = NumToVietnameseWordUtils.convertToCommas(total).replace(",", ".") + " " + type;
+
                     Long totalD = Long.parseLong(total);
-                    String totalWords = NumToVietnameseWordUtils.num2String(totalD) + " đồng";
+                    String totalWords = NumToVietnameseWordUtils.num2String(totalD) + name;
 
                     parameters.put("total", totalView);
                     parameters.put("totalWords", totalWords);
-                    parameters.put("detailOfPayment", item.getNoiDung());
+                    parameters.put("detailOfPayment", showModelDTOS.get(i).getNoiDung());
                     //parameters.put("logo", ClassLoader.getSystemResourceAsStream("images/logo.png"));
                     parameters.put("logo", new ClassPathResource("images/logo.png").getInputStream());
-                    parameters.put("transactionT24", item.getSoDG());
-                    parameters.put("createDate", item.getNgayGio());
-                    parameters.put("user", item.getUser());
-                    parameters.put("cashier", item.getNguoiPheDuyet());
-                    parameters.put("teller", item.getNguoiNhapLieu());
-                    parameters.put("authorier", item.getNguoiPheDuyet());
-                    parameters.put("bangke", item.getBangKe());
-                    parameters.put("nguoiNhan", item.getNguoiNhanTien());
+                    parameters.put("transactionT24", showModelDTOS.get(i).getSoDG());
+                    parameters.put("createDate", showModelDTOS.get(i).getNgayGio());
+                    parameters.put("user", showModelDTOS.get(i).getUser());
+                    parameters.put("cashier", showModelDTOS.get(i).getNguoiPheDuyet());
+                    parameters.put("teller", showModelDTOS.get(i).getNguoiNhapLieu());
+                    parameters.put("authorier", showModelDTOS.get(i).getNguoiPheDuyet());
+                    parameters.put("bangke", showModelDTOS.get(i).getBangKe());
+                    parameters.put("nguoiNhan", showModelDTOS.get(i).getNguoiNhanTien());
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+                    jasperPrintList.add(jasperPrint);
+                }
+                // check trường hợp có bảng kê
+                ShowModelDTO showModelDTO = showModelDTOS.get(showModelDTOS.size() - 1);
+                if (showModelDTO.getFields().size() > 0) {
+                    JasperReport jasperReport = JasperCompileManager.compileReport(new ClassPathResource("reports/InventoryReverseReport.jrxml").getInputStream());
+                    parameters.put("customerId", showModelDTO.getMaKH());
+                    parameters.put("fullName", showModelDTO.getTenKhachHang());
+                    parameters.put("phone", showModelDTO.getSdt());
+                    parameters.put("address", showModelDTO.getDiaChi());
+                    parameters.put("identifierNumber", showModelDTO.getGttt());
+                    parameters.put("identifierDateOfIssue", showModelDTO.getNgayCap());
+                    parameters.put("identifierPlaceOfIssue", showModelDTO.getNoiCap());
+                    parameters.put("coCode", showModelDTO.getCoCode());
+
+                    String total = showModelDTO.getTongSoTienChi();
+                    String totalView = NumToVietnameseWordUtils.convertToCommas(total).replace(",", ".") + name;
+                    Long totalD = Long.parseLong(total);
+                    String totalWords = NumToVietnameseWordUtils.num2String(totalD) + " " + type;
+
+                    parameters.put("total", totalView);
+                    parameters.put("totalWords", totalWords);
+                    parameters.put("detailOfPayment", showModelDTO.getNoiDung());
+                    //parameters.put("logo", ClassLoader.getSystemResourceAsStream("images/logo.png"));
+                    parameters.put("logo", new ClassPathResource("images/logo.png").getInputStream());
+                    parameters.put("transactionT24", showModelDTO.getSoDG());
+                    parameters.put("createDate", showModelDTO.getNgayGio());
+                    parameters.put("user", showModelDTO.getUser());
+                    parameters.put("cashier", showModelDTO.getNguoiPheDuyet());
+                    parameters.put("teller", showModelDTO.getNguoiNhapLieu());
+                    parameters.put("authorier", showModelDTO.getNguoiPheDuyet());
+                    parameters.put("bangke", showModelDTO.getBangKe());
+                    parameters.put("nguoiNhan", showModelDTO.getNguoiNhanTien());
+
+                    parameters.put("tongCong", showModelDTO.getTongCong());
+                    parameters.put("bangChuCai", showModelDTO.getBangChuCai() + name);
+                    parameters.put("loaiBangKe", showModelDTO.getLoaiBangKe());
+
+                    List<Field> listItems = showModelDTO.getFields();
+                    if (listItems != null && listItems.size() > 0) {
+                        // khởi tạo data source
+                        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listItems);
+                        parameters.put("listInventory", dataSource);
+                    }
+
+
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+                    jasperPrintList.add(jasperPrint);
+                } else {
+                    JasperReport jasperReport = JasperCompileManager.compileReport(new ClassPathResource("reports/ReverseReport.jrxml").getInputStream());
+                    parameters.put("customerId", showModelDTO.getMaKH());
+                    parameters.put("fullName", showModelDTO.getTenKhachHang());
+                    parameters.put("phone", showModelDTO.getSdt());
+                    parameters.put("address", showModelDTO.getDiaChi());
+                    parameters.put("identifierNumber", showModelDTO.getGttt());
+                    parameters.put("identifierDateOfIssue", showModelDTO.getNgayCap());
+                    parameters.put("identifierPlaceOfIssue", showModelDTO.getNoiCap());
+                    parameters.put("coCode", showModelDTO.getCoCode());
+
+                    String total = showModelDTO.getTongSoTienChi();
+                    String totalView = NumToVietnameseWordUtils.convertToCommas(total).replace(",", ".") + name;
+                    Long totalD = Long.parseLong(total);
+                    String totalWords = NumToVietnameseWordUtils.num2String(totalD) + " " + type;
+                    parameters.put("total", totalView);
+                    parameters.put("totalWords", totalWords);
+                    parameters.put("detailOfPayment", showModelDTO.getNoiDung());
+                    //parameters.put("logo", ClassLoader.getSystemResourceAsStream("images/logo.png"));
+                    parameters.put("logo", new ClassPathResource("images/logo.png").getInputStream());
+                    parameters.put("transactionT24", showModelDTO.getSoDG());
+                    parameters.put("createDate", showModelDTO.getNgayGio());
+                    parameters.put("user", showModelDTO.getUser());
+                    parameters.put("cashier", showModelDTO.getNguoiPheDuyet());
+                    parameters.put("teller", showModelDTO.getNguoiNhapLieu());
+                    parameters.put("authorier", showModelDTO.getNguoiPheDuyet());
+                    parameters.put("bangke", showModelDTO.getBangKe());
+                    parameters.put("nguoiNhan", showModelDTO.getNguoiNhanTien());
                     JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
                     jasperPrintList.add(jasperPrint);
                 }
@@ -79,6 +162,12 @@ public class JasperResponseService {
         } else {
             return null;
         }
+    }
+
+    private String convertNameMoney(String name) {
+        if (name.equals("USD")) return " Đô la Mỹ";
+        else if (name.equals("VND")) return " đồng";
+        else return " euro";
     }
 
 }
