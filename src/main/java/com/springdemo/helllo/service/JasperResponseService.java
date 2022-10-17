@@ -46,14 +46,18 @@ public class JasperResponseService {
                     parameters.put("identifierPlaceOfIssue", showModelDTOS.get(i).getNoiCap());
                     parameters.put("coCode", showModelDTOS.get(i).getCoCode());
 
+                    String cur = showModelDTOS.get(i).getType();
                     String total = showModelDTOS.get(i).getTongSoTienChi();
-                    String totalView = NumToVietnameseWordUtils.convertToCommas(total).replace(",", ".") + " " + type;
-
-                    Long totalD = Long.parseLong(total);
-                    String totalWords = NumToVietnameseWordUtils.num2String(totalD) + name;
-
-                    parameters.put("total", totalView);
-                    parameters.put("totalWords", totalWords);
+                    if ("VND".equals(cur)) {
+                        String totalView = NumToVietnameseWordUtils.convertToCommas(total);
+                        Long totalD = Long.parseLong(total);
+                        String totalWords = NumToVietnameseWordUtils.num2String(totalD);
+                        parameters.put("total", totalView + " " + cur);
+                        parameters.put("totalWords", totalWords + " đồng");
+                    } else {
+                        parameters.put("total", NumToVietnameseWordUtils.convertToCommasUSD(total) + " " + cur);
+                        parameters.put("totalWords", NumToVietnameseWordUtils.num2StringEURO(total, cur));
+                    }
                     parameters.put("detailOfPayment", showModelDTOS.get(i).getNoiDung());
                     //parameters.put("logo", ClassLoader.getSystemResourceAsStream("images/logo.png"));
                     parameters.put("logo", new ClassPathResource("images/logo.png").getInputStream());
@@ -65,12 +69,17 @@ public class JasperResponseService {
                     parameters.put("authorier", showModelDTOS.get(i).getNguoiPheDuyet());
                     parameters.put("bangke", showModelDTOS.get(i).getBangKe());
                     parameters.put("nguoiNhan", showModelDTOS.get(i).getNguoiNhanTien());
+                    if ("VND".equals(cur)) {
+                        parameters.put("bangChuCai", NumToVietnameseWordUtils.num2String(Long.valueOf(showModelDTOS.get(i).getTongCong())) + " đồng");
+                    } else {
+                        parameters.put("bangChuCai", NumToVietnameseWordUtils.num2StringEURO(showModelDTOS.get(i).getTongCong(), cur));
+                    }
                     JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
                     jasperPrintList.add(jasperPrint);
                 }
                 // check trường hợp có bảng kê
                 ShowModelDTO showModelDTO = showModelDTOS.get(showModelDTOS.size() - 1);
-                if (showModelDTO.getFields().size() > 0) {
+                if (showModelDTO.getFields() != null && showModelDTO.getFields().size() > 0) {
                     JasperReport jasperReport = JasperCompileManager.compileReport(new ClassPathResource("reports/InventoryReverseReport.jrxml").getInputStream());
                     parameters.put("customerId", showModelDTO.getMaKH());
                     parameters.put("fullName", showModelDTO.getTenKhachHang());
@@ -81,13 +90,18 @@ public class JasperResponseService {
                     parameters.put("identifierPlaceOfIssue", showModelDTO.getNoiCap());
                     parameters.put("coCode", showModelDTO.getCoCode());
 
+                    String cur = showModelDTO.getType();
                     String total = showModelDTO.getTongSoTienChi();
-                    String totalView = NumToVietnameseWordUtils.convertToCommas(total).replace(",", ".") + name;
-                    Long totalD = Long.parseLong(total);
-                    String totalWords = NumToVietnameseWordUtils.num2String(totalD) + " " + type;
-
-                    parameters.put("total", totalView);
-                    parameters.put("totalWords", totalWords);
+                    if("VND".equals(cur)) {
+                        String totalView = NumToVietnameseWordUtils.convertToCommas(total);
+                        Long totalD = Long.parseLong(total);
+                        String totalWords = NumToVietnameseWordUtils.num2String(totalD);
+                        parameters.put("total", totalView + " " + cur);
+                        parameters.put("totalWords", totalWords + " đồng");
+                    }else {
+                        parameters.put("total", NumToVietnameseWordUtils.convertToCommasUSD(total) + " " + cur);
+                        parameters.put("totalWords", NumToVietnameseWordUtils.num2StringEURO(total, cur));
+                    }
                     parameters.put("detailOfPayment", showModelDTO.getNoiDung());
                     //parameters.put("logo", ClassLoader.getSystemResourceAsStream("images/logo.png"));
                     parameters.put("logo", new ClassPathResource("images/logo.png").getInputStream());
@@ -99,9 +113,12 @@ public class JasperResponseService {
                     parameters.put("authorier", showModelDTO.getNguoiPheDuyet());
                     parameters.put("bangke", showModelDTO.getBangKe());
                     parameters.put("nguoiNhan", showModelDTO.getNguoiNhanTien());
-
                     parameters.put("tongCong", showModelDTO.getTongCong());
-                    parameters.put("bangChuCai", showModelDTO.getBangChuCai() + name);
+                    if("VND".equals(cur)) {
+                        parameters.put("bangChuCai", NumToVietnameseWordUtils.num2String(Long.valueOf(showModelDTO.getTongCong())) + " đồng");
+                    }else {
+                        parameters.put("bangChuCai", NumToVietnameseWordUtils.num2StringEURO(showModelDTO.getTongCong(),cur));
+                    }
                     parameters.put("loaiBangKe", showModelDTO.getLoaiBangKe());
 
                     List<Field> listItems = showModelDTO.getFields();
@@ -125,12 +142,18 @@ public class JasperResponseService {
                     parameters.put("identifierPlaceOfIssue", showModelDTO.getNoiCap());
                     parameters.put("coCode", showModelDTO.getCoCode());
 
+                    String cur = showModelDTO.getType();
                     String total = showModelDTO.getTongSoTienChi();
-                    String totalView = NumToVietnameseWordUtils.convertToCommas(total).replace(",", ".") + name;
-                    Long totalD = Long.parseLong(total);
-                    String totalWords = NumToVietnameseWordUtils.num2String(totalD) + " " + type;
-                    parameters.put("total", totalView);
-                    parameters.put("totalWords", totalWords);
+                    if ("VND".equals(cur)) {
+                        String totalView = NumToVietnameseWordUtils.convertToCommas(total);
+                        Long totalD = Long.parseLong(total);
+                        String totalWords = NumToVietnameseWordUtils.num2String(totalD);
+                        parameters.put("total", totalView + " " + cur);
+                        parameters.put("totalWords", totalWords + " đồng");
+                    } else {
+                        parameters.put("total", NumToVietnameseWordUtils.convertToCommasUSD(total) + " " + cur);
+                        parameters.put("totalWords", NumToVietnameseWordUtils.num2StringEURO(total, cur));
+                    }
                     parameters.put("detailOfPayment", showModelDTO.getNoiDung());
                     //parameters.put("logo", ClassLoader.getSystemResourceAsStream("images/logo.png"));
                     parameters.put("logo", new ClassPathResource("images/logo.png").getInputStream());

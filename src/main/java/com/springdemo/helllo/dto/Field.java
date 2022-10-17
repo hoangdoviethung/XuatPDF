@@ -9,18 +9,17 @@ public class Field {
     private String thanhTien;
 
     public String getMenhGia() {
-        return NumToVietnameseWordUtils.convertToCommas(menhGia);
+        if (this.menhGia.contains(".")) return this.menhGia;
+        else return NumToVietnameseWordUtils.convertToCommas(menhGia);
     }
 
     public String getSoTo() {
-        if (this.soTo == null) return null;
-
-        return NumToVietnameseWordUtils.convertToCommas(soTo);
+        return soTo;
     }
 
     public String getThanhTien() {
-        if (this.soTo == null) return null;
-        return NumToVietnameseWordUtils.convertToCommas(String.valueOf((Integer.parseInt(this.menhGia) * Integer.parseInt(this.soTo))));
+        if (this.thanhTien.contains(".")) return this.thanhTien;
+        else return NumToVietnameseWordUtils.convertToCommas(thanhTien);
     }
 
     public void setMenhGia(String menhGia) {
@@ -35,3 +34,4 @@ public class Field {
         this.thanhTien = thanhTien;
     }
 }
+

@@ -1,10 +1,13 @@
 package utils;
 
+import org.springframework.util.StringUtils;
 
+import org.springframework.util.ObjectUtils;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -124,6 +127,9 @@ public class NumToVietnameseWordUtils {
     }
 
     public static String convertToCommas(String input) {
+        if (ObjectUtils.isEmpty(input)) {
+            return "";
+        }
         double amount = Double.parseDouble(input);
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(amount).replaceAll(",", ".");
@@ -173,6 +179,24 @@ public class NumToVietnameseWordUtils {
                 .trim());
     }
 
+    public static String num2String1(Double num, String type) {
+        String check = num.toString();
+        String[] s = StringUtils.split(check, ".");
+        if (s[1].equals("0")) {
+            return num2String(num.longValue()) + " " + convertNameMoney(type);
+        } else {
+            Long start = Long.valueOf(s[0]);
+            Long end = Long.valueOf(s[1]);
+            if (s[1].length() == 1) {
+                end *= 10;
+            }
+            String start1 = num2String(start.longValue()) + " " + convertNameMoney(type);
+            String end1 = " và " + num2String(end.longValue()) + " cent";
+            return start1 + end1.toLowerCase(Locale.ROOT);
+        }
+    }
+
+
     private static String capitalize(String str) {
         if (str == null || str.isEmpty()) {
             return str;
@@ -199,5 +223,49 @@ public class NumToVietnameseWordUtils {
         }
 
         return count < groupOfThousand.size() - 1;
+    }
+
+    public static String convertToCommasUSD(String num) {
+        if (ObjectUtils.isEmpty(num)) {
+            return "";
+        }
+        String[] buildArr = num.split("\\.");
+        if (buildArr.length > 1) {
+            return convertToCommas(buildArr[0]) + "," + buildArr[1];
+        } else if (buildArr.length == 1) {
+            return convertToCommas(buildArr[0]);
+        } else {
+            return "";
+        }
+    }
+
+    public static String num2StringEURO(String num, String cur) {
+        if (ObjectUtils.isEmpty(num)) {
+            return "";
+        }
+        String[] buildArr = num.split("\\.");
+        if ("USD".equals(cur)) {
+            if (buildArr.length > 1) {
+                return num2String(Long.valueOf(buildArr[0])) + " Đô la Mỹ và " + num2String(Long.valueOf(buildArr[1])).toLowerCase() + " cent";
+            } else if (buildArr.length == 1) {
+                return num2String(Long.valueOf(buildArr[0])) + " Đô la Mỹ";
+            } else {
+                return "";
+            }
+        } else {
+            if (buildArr.length > 1) {
+                return num2String(Long.valueOf(buildArr[0])) + " EURO và " + num2String(Long.valueOf(buildArr[1])).toLowerCase() + " cent";
+            } else if (buildArr.length == 1) {
+                return num2String(Long.valueOf(buildArr[0])) + " EURO";
+            } else {
+                return "";
+            }
+        }
+    }
+
+    private static String convertNameMoney(String name) {
+        if (name.equals("USD")) return " Đô la Mỹ";
+        else if (name.equals("VND")) return " đồng";
+        else return " euro";
     }
 }

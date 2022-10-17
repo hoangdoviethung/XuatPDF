@@ -292,7 +292,7 @@
 				<text><![CDATA[Mệnh giá]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="344" y="216" width="172" height="30" uuid="ce2ca2d7-8d1c-4758-8b61-3abd313a1551"/>
+				<reportElement positionType="Float" x="344" y="216" width="171" height="30" uuid="ce2ca2d7-8d1c-4758-8b61-3abd313a1551"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -305,12 +305,12 @@
 				<text><![CDATA[Thành tiền]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement positionType="Float" x="0" y="246" width="516" height="28" uuid="343b2705-c862-4ecc-89b1-79b03046d820"/>
+				<reportElement positionType="Float" x="0" y="246" width="515" height="28" uuid="343b2705-c862-4ecc-89b1-79b03046d820"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="Dataset1" uuid="b279643b-4813-42eb-ba18-23c34f661827">
 						<dataSourceExpression><![CDATA[$P{listInventory}]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="28" width="516">
+					<jr:listContents height="28" width="515">
 						<textField>
 							<reportElement x="0" y="0" width="172" height="28" uuid="53b5dc82-44c1-4c60-b85d-31ef9fa7ff3d"/>
 							<box>
@@ -319,7 +319,7 @@
 								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
-							<textElement textAlignment="Right">
+							<textElement textAlignment="Right" verticalAlignment="Middle">
 								<paragraph rightIndent="10" spacingBefore="4"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{menhGia}]]></textFieldExpression>
@@ -332,21 +332,21 @@
 								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
-							<textElement textAlignment="Center" markup="html">
+							<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
 								<font pdfEncoding=""/>
 								<paragraph spacingBefore="4" spacingAfter="2"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{soTo}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="343" y="0" width="172" height="28" uuid="4465f36c-d9a5-4c7f-8383-e5dbdbba9a31"/>
+							<reportElement x="344" y="0" width="171" height="28" uuid="4465f36c-d9a5-4c7f-8383-e5dbdbba9a31"/>
 							<box>
 								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
-							<textElement textAlignment="Right" markup="html">
+							<textElement textAlignment="Right" verticalAlignment="Middle" markup="html">
 								<font pdfEncoding=""/>
 								<paragraph lineSpacing="Single" rightIndent="10" spacingBefore="4" spacingAfter="2"/>
 							</textElement>
@@ -426,14 +426,14 @@
 				<text><![CDATA[Tổng cộng]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="173" y="274" width="342" height="22" uuid="823297d8-1d4e-4f6a-885a-114694faa120"/>
+				<reportElement positionType="Float" x="172" y="274" width="343" height="22" uuid="823297d8-1d4e-4f6a-885a-114694faa120"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="9"/>
 					<paragraph rightIndent="10"/>
 				</textElement>
@@ -453,14 +453,14 @@
 				<text><![CDATA[Bằng chữ]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="173" y="296" width="342" height="22" uuid="d4632a9a-fee5-4fa0-b31b-425877f14040"/>
+				<reportElement positionType="Float" x="172" y="296" width="343" height="22" uuid="d4632a9a-fee5-4fa0-b31b-425877f14040"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="9"/>
 					<paragraph lineSpacing="Single" rightIndent="10"/>
 				</textElement>
@@ -488,7 +488,7 @@
 				<text><![CDATA[(kiêm Bảng kê tiền lĩnh )]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="186" width="516" height="30" uuid="e85745c5-8cd1-49f8-90e4-ce28589515b6"/>
+				<reportElement x="0" y="186" width="515" height="30" uuid="e85745c5-8cd1-49f8-90e4-ce28589515b6"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

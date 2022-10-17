@@ -29,11 +29,15 @@ public class ShowModelDTO {
     private String nguoiNhapLieu;
     private String nguoiKiemSoat;
     private String nguoiPheDuyet;
+
+
     private String loaiBangKe;
 
     private String type;
     List<Field> fields;
     private String tongCong;
-    private String bangChuCai;
 
+    public String getTongCong() {
+        return this.tongCong;
+    }
 }

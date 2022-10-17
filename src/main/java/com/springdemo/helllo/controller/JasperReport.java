@@ -35,115 +35,65 @@ public class JasperReport {
     }
 
     /*
-      [{
-    "soDG": "SEATELLER20_FEERE_30092022_1667112484",
-    "ngayGio": "30-09-2022 13:51:51",
-    "user": "SEATELLER20",
-    "bangKe": "",
-    "tenKhachHang": "TRAN THI YEN",
-    "gttt": "163042021",
-    "noiDung": "note",
-    "tongSoTienChi": "9999",
-    "bangChu": "",
-    "ngayCap": "27/10/2020",
-    "maKH": "14892607",
-    "noiCap": "CA NAM DINH dfdfdfdf",
-    "sdt": "0855254514",
-    "diaChi": "22 ngo 210, doi can KHI KI VAM KIM1 LU HAI BAN TRUNG HF",
-    "nguoiNhanTien": "TRAN THI YEN",
-    "nguoiNhapLieu": "SEATELLER20",
-    "nguoiKiemSoat": "SEATELLER20",
-    "nguoiPheDuyet": "SEATELLER20",
-    "coCode": "Chi nhánh Sở giao dịch (VN0010002)",
-    "type": "EURO"
-},
-{
-    "soDG": "SEATELLER20_FEERE_30092022_1667112484",
-    "ngayGio": "30-09-2022 13:51:51",
-    "user": "SEATELLER20",
-    "bangKe": "",
-    "tenKhachHang": "TRAN THI YEN",
-    "gttt": "163042021",
-    "noiDung": "note",
-    "tongSoTienChi": "9999",
-    "bangChu": "",
-    "ngayCap": "27/10/2020",
-    "maKH": "14892607",
-    "noiCap": "CA NAM DINH dfdfdfdf",
-    "sdt": "0855254514",
-    "diaChi": "22 ngo 210, doi can KHI KI VAM KIM1 LU HAI BAN TRUNG HF",
-    "nguoiNhanTien": "TRAN THI YEN",
-    "nguoiNhapLieu": "SEATELLER20",
-    "nguoiKiemSoat": "SEATELLER20",
-    "nguoiPheDuyet": "SEATELLER20",
-    "coCode": "Chi nhánh Sở giao dịch (VN0010002)",
-    "type": "EURO"
-},
-{
-    "soDG": "SEATELLER20_FEERE_30092022_1667112484",
-    "ngayGio": "30-09-2022 13:51:51",
-    "user": "SEATELLER20",
-    "bangKe": "",
-    "tenKhachHang": "TRAN THI YEN",
-    "gttt": "163042021",
-    "noiDung": "note",
-    "tongSoTienChi": "9999",
-    "bangChu": "",
-    "ngayCap": "27/10/2020",
-    "maKH": "14892607",
-    "noiCap": "CA NAM DINH dfdfdfdf",
-    "sdt": "0855254514",
-    "diaChi": "22 ngo 210, doi can KHI KI VAM KIM1 LU HAI BAN TRUNG HF",
-    "coCode": "Chi nhánh Sở giao dịch (VN0010002)",
-    "loaiBangKe": "Bảng kê các loại tiền lĩnh (VND)",
-    "type": "VND",
-    "fields": [
-        {
-            "menhGia": "500000",
-            "soTo": "5"
-        },
-        {
-            "menhGia": "200000",
-            "soTo": null
-        },
-        {
-            "menhGia": "100000",
-            "soTo": null
-        },
-        {
-            "menhGia": "50000",
-            "soTo": "5"
-        },
-        {
-            "menhGia": "20000",
-            "soTo": "5277"
-        },
-        {
-            "menhGia": "10000",
-            "soTo": "1"
-        },
-        {
-            "menhGia": "5000",
-            "soTo": "15"
-        },
-        {
-            "menhGia": "2000",
-            "soTo": "3"
-        },
-        {
-            "menhGia": "1000",
-            "soTo": "6"
-        },
-        {
-            "menhGia": "500",
-            "soTo": "3"
-        }
-    ],
-    "nguoiNhanTien": "TRAN THI YEN",
-    "nguoiNhapLieu": "SEATELLER20",
-    "nguoiKiemSoat": "SEATELLER20",
-    "nguoiPheDuyet": "SEATELLER20"
-}
+      [
+    {
+        "soDG": "SEATELLER20_FEERE_14102022_1668414338",
+        "ngayGio": "14-10-2022 15:31:09",
+        "user": "SEATELLER20",
+        "bangKe": "",
+        "tenKhachHang": "NGUYEN THI BANG TAM",
+        "gttt": "C011642272",
+        "noiDung": "note",
+        "tongSoTienChi": "1000000000.12",
+        "bangChu": "",
+        "ngayCap": "23/05/2000",
+        "maKH": "1",
+        "noiCap": "HA NOI",
+        "sdt": "045727387",
+        "diaChi": "89 HANG BAC",
+        "nguoiNhanTien": "NGUYEN THI BANG TAM",
+        "nguoiNhapLieu": "SEATELLER20",
+        "nguoiKiemSoat": "SEATELLER20",
+        "nguoiPheDuyet": "SEATELLER20",
+        "coCode": "Chi nhánh Sở giao dịch (VN0010002)",
+        "type": "USD"
+    },
+    {
+        "soDG": "SEATELLER20_FEERE_14102022_1668414338",
+        "ngayGio": "14-10-2022 15:31:09",
+        "user": "SEATELLER20",
+        "bangKe": "",
+        "tenKhachHang": "NGUYEN THI BANG TAM",
+        "gttt": "C011642272",
+        "noiDung": "đâsd",
+        "tongSoTienChi": "10000000000.1",
+        "bangChu": "",
+        "ngayCap": "23/05/2000",
+        "maKH": "1",
+        "noiCap": "HA NOI",
+        "sdt": "045727387",
+        "diaChi": "89 HANG BAC",
+        "nguoiNhanTien": "NGUYEN THI BANG TAM",
+        "nguoiNhapLieu": "SEATELLER20",
+        "nguoiKiemSoat": "SEATELLER20",
+        "nguoiPheDuyet": "SEATELLER20",
+        "coCode": "Chi nhánh Sở giao dịch (VN0010002)",
+        "loaiBangKe": "Bảng kê các loại tiền lĩnh (USD)",
+        "type": "USD",
+        "tongCong": "1000000000.01",
+        "fields": [
+            {
+                "menhGia": 100,
+                "soTo": 10000,
+                "thanhTien": 1000000
+            },
+            {
+                "menhGia": 0.01,
+                "soTo": 10,
+                "thanhTien": 0.1
+            }
+        ]
+    }
 ]
      */
 }
