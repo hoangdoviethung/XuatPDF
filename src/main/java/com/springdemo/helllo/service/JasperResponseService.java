@@ -1,7 +1,6 @@
 package com.springdemo.helllo.service;
 
-import com.springdemo.helllo.dto.Field;
-import com.springdemo.helllo.dto.ShowModelDTO;
+import com.springdemo.helllo.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -92,13 +91,13 @@ public class JasperResponseService {
 
                     String cur = showModelDTO.getType();
                     String total = showModelDTO.getTongSoTienChi();
-                    if("VND".equals(cur)) {
+                    if ("VND".equals(cur)) {
                         String totalView = NumToVietnameseWordUtils.convertToCommas(total);
                         Long totalD = Long.parseLong(total);
                         String totalWords = NumToVietnameseWordUtils.num2String(totalD);
                         parameters.put("total", totalView + " " + cur);
                         parameters.put("totalWords", totalWords + " đồng");
-                    }else {
+                    } else {
                         parameters.put("total", NumToVietnameseWordUtils.convertToCommasUSD(total) + " " + cur);
                         parameters.put("totalWords", NumToVietnameseWordUtils.num2StringEURO(total, cur));
                     }
@@ -114,10 +113,10 @@ public class JasperResponseService {
                     parameters.put("bangke", showModelDTO.getBangKe());
                     parameters.put("nguoiNhan", showModelDTO.getNguoiNhanTien());
                     parameters.put("tongCong", showModelDTO.getTongCong());
-                    if("VND".equals(cur)) {
+                    if ("VND".equals(cur)) {
                         parameters.put("bangChuCai", NumToVietnameseWordUtils.num2String(Long.valueOf(showModelDTO.getTongCong())) + " đồng");
-                    }else {
-                        parameters.put("bangChuCai", NumToVietnameseWordUtils.num2StringEURO(showModelDTO.getTongCong(),cur));
+                    } else {
+                        parameters.put("bangChuCai", NumToVietnameseWordUtils.num2StringEURO(showModelDTO.getTongCong(), cur));
                     }
                     parameters.put("loaiBangKe", showModelDTO.getLoaiBangKe());
 
@@ -186,6 +185,79 @@ public class JasperResponseService {
             return null;
         }
     }
+
+    public byte[] exportPdfPaymentSlip(PaymentSlipDTO paymentSlipDTO) throws JRException {
+        log.debug("Start exportPdf transfer_reserve info {}", paymentSlipDTO);
+
+        if (paymentSlipDTO != null) {
+            try {
+                List<JasperPrint> jasperPrintList = new ArrayList<JasperPrint>();
+                // khai báo các parameter
+                Map<String, Object> parameters = new HashMap<>();
+
+
+                JasperReport jasperReport = JasperCompileManager.compileReport(new ClassPathResource("reports/PaymentSlip.jrxml").getInputStream());
+                parameters.put("soGD", paymentSlipDTO.getSoGD());
+                parameters.put("ngayGio", paymentSlipDTO.getNgayGio());
+                parameters.put("user", paymentSlipDTO.getUser());
+                parameters.put("bangKe", paymentSlipDTO.getBangKe());
+                parameters.put("logo",  new ClassPathResource("images/logo.png").getInputStream());
+
+                parameters.put("nguoiNhanTien", paymentSlipDTO.getNguoiNhanTien());
+                parameters.put("maKH", paymentSlipDTO.getMaKH());
+                parameters.put("soGTTT", paymentSlipDTO.getSoGTTT());
+                parameters.put("ngayCap", paymentSlipDTO.getNgayCap());
+                parameters.put("noiCap", paymentSlipDTO.getNoiCap());
+                parameters.put("diaChi", paymentSlipDTO.getDiaChi());
+                parameters.put("noiDung", paymentSlipDTO.getNoiDung());
+                parameters.put("soSo", paymentSlipDTO.getSoSo());
+                parameters.put("kyHan", paymentSlipDTO.getKyHan());
+                parameters.put("sanPham", paymentSlipDTO.getSanPham());
+                parameters.put("tienThanhToan", paymentSlipDTO.getTienThanhToan());
+                parameters.put("tongTienThanhToan", paymentSlipDTO.getTongTienThanhToan());
+                parameters.put("bangChu", paymentSlipDTO.getBangChu());
+                parameters.put("nguoiNhanTien1", paymentSlipDTO.getNguoiNhanTien1());
+                parameters.put("thuQuy", paymentSlipDTO.getThuQuy());
+                parameters.put("nguoiNhapLieu", paymentSlipDTO.getNguoiNhapLieu());
+                parameters.put("nguoiPheDuyet", paymentSlipDTO.getNguoiPheDuyet());
+
+
+
+
+                List<Table> listItems = paymentSlipDTO.getTableBangKe();
+                if (listItems != null && listItems.size() > 0) {
+                    // khởi tạo data source
+                    JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listItems);
+                    parameters.put("tableBangKe", dataSource);
+                }
+
+                List<Table1> listItems1 = paymentSlipDTO.getTableBangKe1();
+                if (listItems1 != null && listItems1.size() > 0) {
+                    // khởi tạo data source1
+                    JRBeanCollectionDataSource dataSource1 = new JRBeanCollectionDataSource(listItems1);
+                    parameters.put("table1", dataSource1);
+                }
+
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+                jasperPrintList.add(jasperPrint);
+                JRPdfExporter exporter = new JRPdfExporter();
+                ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+                exporter.setExporterInput(SimpleExporterInput.getInstance(jasperPrintList));
+                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(pdfOutputStream));
+
+                SimplePdfReportConfiguration reportConfig = new SimplePdfReportConfiguration();
+                reportConfig.setSizePageToContent(true);
+                reportConfig.setForceLineBreakPolicy(false);
+                exporter.exportReport();
+                return pdfOutputStream.toByteArray();
+            } catch (JRException | IOException e) {
+                throw new JRException(e.getMessage());
+            }
+        } else {
+            return null;
+        }
+    }
+
 
     private String convertNameMoney(String name) {
         if (name.equals("USD")) return " Đô la Mỹ";

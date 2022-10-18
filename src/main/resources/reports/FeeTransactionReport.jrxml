@@ -77,10 +77,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[($P{user}!=null && $P{user}.length()>0)?$P{user}:""]]></textFieldExpression>
 			</textField>
-			<image onErrorType="Blank">
-				<reportElement x="1" y="0" width="150" height="39" uuid="ad359cbd-5b81-4f8c-81bb-bcc77a02af68"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
-			</image>
 			<textField>
 				<reportElement x="364" y="60" width="150" height="20" uuid="6986845f-cd2c-468a-a8f8-1f398f8e5e6f"/>
 				<textElement verticalAlignment="Middle">
@@ -109,6 +105,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[($P{PGD}!=null && $P{PGD}.length()>0)?$P{PGD}:""]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="0" y="-10" width="50" height="50" uuid="9fbbc691-05c9-4bee-b597-659805e475ed"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<detail>

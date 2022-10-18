@@ -1,5 +1,6 @@
 package com.springdemo.helllo.controller;
 
+import com.springdemo.helllo.dto.PaymentSlipDTO;
 import com.springdemo.helllo.dto.ShowModelDTO;
 import com.springdemo.helllo.service.JasperResponseService;
 import net.sf.jasperreports.engine.JRException;
@@ -26,6 +27,16 @@ public class JasperReport {
     public ResponseEntity<byte[]> exportPdf(@RequestBody List<ShowModelDTO> reqDTO) throws JRException {
         List<ShowModelDTO> exportPdfDTO = reqDTO;
         byte[] byteArr = jasperResponseService.exportPdf(exportPdfDTO);
+        HttpHeaders headers = new HttpHeaders();
+        ContentDisposition contentDisposition = ContentDisposition.builder("attachment").filename("Reverse").build();
+        headers.setContentDisposition(contentDisposition);
+        MediaType mediaType = MediaType.parseMediaType("application/pdf;charset=utf-8");
+        headers.setContentType(mediaType);
+        return ResponseEntity.ok().headers(headers).body(byteArr);
+    }
+    @PostMapping("/export-pdf/payment-slip")
+    public ResponseEntity<byte[]> exportPdfPaymentSlip(@RequestBody PaymentSlipDTO reqDTO) throws JRException {
+        byte[] byteArr = jasperResponseService.exportPdfPaymentSlip(reqDTO);
         HttpHeaders headers = new HttpHeaders();
         ContentDisposition contentDisposition = ContentDisposition.builder("attachment").filename("Reverse").build();
         headers.setContentDisposition(contentDisposition);
@@ -96,4 +107,102 @@ public class JasperReport {
     }
 ]
      */
+
+
+    /*
+    *
+    * {
+    "soGD": "000056402519",
+    "ngayGio": "01/06/2022    18:33",
+    "user": "SBOFS",
+    "bangKe": "",
+    "nguoiNhanTien": "LE THI THIEP",
+    "maKH": "15356095",
+    "soGTTT": "052143000052",
+    "ngayCap": "12/11/2019",
+    "noiCap": "CS QLHC V TTXH",
+    "diaChi": "27A TRAN HUNG DAO, P PHAN CHU TRINH QUAN HOAN KIEM HA NO",
+    "noiDung": "Tất toán Sổ tiết kiệm",
+    "soSo": "SC2208787",
+    "kyHan": "6 thang",
+    "sanPham": "TIET KIEM LINH LAI CUOI KY",
+    "tienThanhToan": "0 VND",
+    "tienTatToan": "0 VND",
+    "tongTienThanhToan": "8.695.299 VND",
+    "bangChu": "Tám triệu, sáu trăm chín mươi lăm nghìn, hai trăm chín mươi chín đồng",
+    "nguoiNhanTien1": "SEATELLER1",
+    "thuQuy": "SEATELLER1",
+    "nguoiNhapLieu": "SEATELLER1",
+    "nguoiPheDuyet": "SEATELLER1",
+    "tong": "695.299",
+    "tableBangKe": [
+        {
+            "tuNgay": "20-01-1998",
+            "denNgay": "28/12/2020",
+            "soNgay": "183",
+            "soDu": "8.000.000",
+            "laiXuat": "5,8%",
+            "tienLai": "232.636"
+        },
+        {
+            "tuNgay": "20-01-1998",
+            "denNgay": "28/12/2020",
+            "soNgay": "183",
+            "soDu": "8.000.000",
+            "laiXuat": "5,8%",
+            "tienLai": "232.636"
+        },
+        {
+            "tuNgay": "20-01-1998",
+            "denNgay": "28/12/2020",
+            "soNgay": "183",
+            "soDu": "8.000.000",
+            "laiXuat": "5,8%",
+            "tienLai": "232.636"
+        },
+        {
+            "tuNgay": "20-01-1998",
+            "denNgay": "28/12/2020",
+            "soNgay": "183",
+            "soDu": "8.000.000",
+            "laiXuat": "5,8%",
+            "tienLai": "232.636"
+        },
+        {
+            "tuNgay": "20-01-1998",
+            "denNgay": "28/12/2020",
+            "soNgay": "183",
+            "soDu": "8.000.000",
+            "laiXuat": "5,8%",
+            "tienLai": "232.636"
+        }
+    ],
+    "tableBangKe1": [
+        {
+            "ht": "TK NO",
+            "soTK": "000056402519",
+            "tenTK": "LE THI THIEP 6T CK",
+            "soTien": "8.695.299 VND"
+        },
+        {
+            "ht": "TK NO",
+            "soTK": "000056402519",
+            "tenTK": "LE THI THIEP 6T CK",
+            "soTien": "8.695.299 VND"
+        },
+        {
+            "ht": "TK NO",
+            "soTK": "000056402519",
+            "tenTK": "LE THI THIEP 6T CK",
+            "soTien": "8.695.299 VND"
+        },
+        {
+            "ht": "TK Co",
+            "soTK": "VND1000199990002",
+            "tenTK": "TIEN MAT TAI QUY CHINH CN SGD - VND",
+            "soTien": "8.695.299 VND"
+        }
+    ]
+}
+    * */
 }
